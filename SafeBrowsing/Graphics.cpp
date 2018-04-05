@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "graphics.h"
 #include <SDL.h>
+#include <SDL_image.h>
 
 SDL_Window* window;
 SDL_Surface* screenSurface;
@@ -63,18 +64,17 @@ void destroyWindow() {
 }
 
 
-
-void drawImg(string img, int x, int y, int size) {
+void drawImg(string imgPath, int x, int y, int size) {
 
 	SDL_Surface* surface = IMG_Load(img);
 	SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
 	SDL_FreeSurface(surface);
 
 	SDL_Rect destination;
-	destination.x = xPos;
-	destination.y = yPos;
-	destination.w = objSize;
-	destination.w = objSize;
+	destination.x = x;
+	destination.y = y;
+	destination.w = size;
+	destination.w = size;
 
 	//SD_RenderCopy(renderer, texture, NULL, &destination);
 }
