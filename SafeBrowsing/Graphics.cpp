@@ -1,7 +1,9 @@
 #include "stdafx.h"
+#include <string>
 #include "graphics.h"
 #include <SDL.h>
 #include <SDL_image.h>
+
 
 SDL_Window* window;
 SDL_Surface* screenSurface;
@@ -10,48 +12,46 @@ using namespace std;
 
 void drawWindow(int width, int height)
 {
-	//The window we'll be rendering to
-	window = NULL;
+	bool quit = false;
+	SDL_Event event;
 
-	//The surface contained by the window
-	screenSurface = NULL;
+	SDL_Init(SDL_INIT_VIDEO);
+	IMG_Init(IMG_INIT_PNG);
 
-	//Initialize SDL
-	if (SDL_Init(SDL_INIT_VIDEO) < 0)
+	SDL_Window * window = SDL_CreateWindow("SDL2 Displaying Image",
+		SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 640, 480, 0);
+
+	SDL_Renderer * renderer = SDL_CreateRenderer(window, -1, 0);
+	SDL_Surface * image = IMG_Load("Chrome.png");
+	SDL_Texture * texture = SDL_CreateTextureFromSurface(renderer, image);
+
+	while (!quit)
 	{
-		printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
-	}
-	else
-	{
-		//Create window
-		window = SDL_CreateWindow("Safe Browsing", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_SHOWN);
-		if (window == NULL)
+		SDL_WaitEvent(&event);
+
+		switch (event.type)
 		{
-			printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
+		case SDL_QUIT:
+			quit = true;
+			break;
 		}
-		else
-		{
-			//Get window surface
-			screenSurface = SDL_GetWindowSurface(window);
 
-			//Fill the surface white
-			SDL_FillRect(screenSurface, NULL, SDL_MapRGB(screenSurface->format, 0xFF, 0xFF, 0xFF));
-
-			//Update the surface
-			SDL_UpdateWindowSurface(window);
-
-			//Wait 12 seconds
-			SDL_Delay(12000);
-		}
+		//SDL_Rect dstrect = { 5, 5, 320, 240 };
+		//SDL_RenderCopy(renderer, texture, NULL, &dstrect);
+		SDL_RenderCopy(renderer, texture, NULL, NULL);
+		SDL_RenderPresent(renderer);
 	}
 
+	SDL_DestroyTexture(texture);
+	SDL_FreeSurface(image);
+	SDL_DestroyRenderer(renderer);
+	SDL_DestroyWindow(window);
+
+	SDL_Quit();
+	IMG_Quit();
 }
 
 void clearScreen() {
-
-}
-
-void drawGameObjects() {
 
 }
 
@@ -63,10 +63,10 @@ void destroyWindow() {
 	SDL_Quit();
 }
 
+void drawImg(std::string imgPath, int x, int y, int size) {
+	SDL_Renderer * renderer = SDL_CreateRenderer(window, -1, 0);
 
-void drawImg(string imgPath, int x, int y, int size) {
-
-	SDL_Surface* surface = IMG_Load(img);
+	SDL_Surface* surface = IMG_Load(imgPath.c_str());
 	SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
 	SDL_FreeSurface(surface);
 
@@ -74,7 +74,9 @@ void drawImg(string imgPath, int x, int y, int size) {
 	destination.x = x;
 	destination.y = y;
 	destination.w = size;
-	destination.w = size;
+	destination.h = size;
 
-	//SD_RenderCopy(renderer, texture, NULL, &destination);
+	SDL_RenderCopy(renderer, texture, NULL, &destination);
+	SDL_RenderPresent(renderer);
+	SDL_UpdateWindowSurface(window);
 }
