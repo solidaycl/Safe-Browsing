@@ -40,5 +40,38 @@
     <Image Include="Firefox.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="Chrome.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Chromium.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="GreenVirus.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="GreenVirus2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="IE.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Kaspersky.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Opera.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Patch.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Safari.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Trojan.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Update.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>
