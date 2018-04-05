@@ -64,7 +64,7 @@ void destroyWindow() {
 
 
 
-public void drawImg(string img, int x, int y, int size) {
+void drawImg(string img, int x, int y, int size) {
 
 	SDL_Surface* surface = IMG_Load(img);
 	SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
@@ -76,5 +76,5 @@ public void drawImg(string img, int x, int y, int size) {
 	destination.w = objSize;
 	destination.w = objSize;
 
-	SD_RenderCopy(renderer, texture, NULL, &destination);
+	//SD_RenderCopy(renderer, texture, NULL, &destination);
 }
