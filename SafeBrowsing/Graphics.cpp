@@ -18,7 +18,7 @@ void drawWindow(int width, int height)
 {
 	bool quit = false;
 
-	SDL_Init(SDL_INIT_VIDEO);
+	SDL_Init(SDL_INIT_EVERYTHING);
 	IMG_Init(IMG_INIT_PNG);
 
 	SDL_Window * window = SDL_CreateWindow("Safe Browsing",
@@ -59,10 +59,11 @@ void drawImg(std::string imgPath, int x, int y, int size) {
 	destination.h = size;
 
 	SDL_RenderCopy(renderer, texture, NULL, &destination);
+	SDL_DestroyTexture(texture);
 }
 
 void updateScreen() {
 	SDL_RenderPresent(renderer);
 	SDL_RenderClear(renderer);
-//	SDL_UpdateWindowSurface(window);
+	SDL_UpdateWindowSurface(window);
 }
