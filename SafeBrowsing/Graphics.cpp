@@ -4,11 +4,13 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
+#include <SDL_mixer.h>
 
 
 SDL_Window* window;
 SDL_Surface* screenSurface;
 TTF_Font * font;
+TTF_Font * wastedFont;
 
 // store the dimensions of the window
 int width;
@@ -22,6 +24,11 @@ using namespace std;
 
 SDL_Texture * texture_chrome;
 SDL_Texture * texture_GreenVirus2;
+
+// sound effects
+Mix_Music * powerupSound = NULL;
+Mix_Music * enemyCollisionSound = NULL;
+Mix_Music * gameOverSound = NULL;
 
 
 void drawWindow(int width, int height)
@@ -40,6 +47,7 @@ void drawWindow(int width, int height)
 	// set up the font
 	TTF_Init();
 	font = TTF_OpenFont("Resources/Xlines.ttf", 100);
+	wastedFont = TTF_OpenFont("Resources/Wasted.ttf", 1000);
 	
 	// load chrome
 	SDL_Surface * img1 = IMG_Load("Resources/Chrome.png");
@@ -50,11 +58,52 @@ void drawWindow(int width, int height)
 	SDL_Surface * img2 = IMG_Load("Resources/GreenVirus2.png");
 	texture_GreenVirus2 = SDL_CreateTextureFromSurface(renderer, img2);
 	SDL_FreeSurface(img2);
+	
+	// load sound effects
+	Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096);
+	powerupSound = Mix_LoadMUS("Resources/PowerUp.mp3");
+	enemyCollisionSound = Mix_LoadMUS("Resources/EnemyCollision.mp3");
+	gameOverSound = Mix_LoadMUS("Resources/GameOver.mp3");
+	
 
 }
 
-void clearScreen() {
+// plays the power up sound
+void playPowerupSound() {
+	Mix_PlayMusic(powerupSound, 0);
+}
 
+void playEnemyCollisionSound() {
+	Mix_PlayMusic(enemyCollisionSound, 0);
+}
+
+void playGameOverSound() {
+	Mix_PlayMusic(gameOverSound, 0);
+}
+
+void displayEndGame() {
+	SDL_Color color = { 255, 0, 0};
+
+	string msg = "Wasted";
+
+	SDL_Surface * surface = TTF_RenderText_Solid(wastedFont,
+		msg.c_str(), color);
+	SDL_Texture * textTexture = SDL_CreateTextureFromSurface(renderer, surface);
+
+	SDL_Rect destination;
+	destination.x = 0;
+	destination.y = 0;
+	destination.w = 150;
+	destination.h = 40;
+
+	SDL_RenderCopy(renderer, textTexture, NULL, /*&destination*/NULL);
+	
+	// clean up memory that was created
+	SDL_DestroyTexture(textTexture);
+	SDL_FreeSurface(surface);
+
+	// draw to the screen
+	SDL_RenderPresent(renderer);
 }
 
 void destroyWindow() {
@@ -133,7 +182,6 @@ void drawImg(std::string imgPath, int x, int y, int size) {
 	else if (!imgPath.compare("GreenVirus2.png")) {
 	SDL_RenderCopy(renderer, texture_GreenVirus2, NULL, &destination);
 	}
-
 }
 
 void updateScreen() {
