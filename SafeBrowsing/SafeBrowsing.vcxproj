@@ -89,12 +89,12 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\SDL2-2.0.8\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>"C:\SDL\SDL2-2.0.8\include"</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\SDL2-2.0.8\lib\x86</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>"C:\SDL\SDL2-2.0.8\lib\x86"</AdditionalLibraryDirectories>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -120,14 +120,14 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\SDL2-2.0.8\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>"C:\SDL\SDL2-2.0.8\include"</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\SDL2-2.0.8\lib\x86</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>"C:\SDL\SDL2-2.0.8\lib\x86"</AdditionalLibraryDirectories>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -173,7 +173,8 @@
     <Image Include="Kaspersky.png" />
     <Image Include="Opera.png" />
     <Image Include="Patch.png" />
-    <Image Include="Safari.png" />
+    <Image Include="Resources\Exclamation.png" />
+    <Image Include="Resources\Safari.png" />
     <Image Include="Trojan.png" />
     <Image Include="Update.png" />
   </ItemGroup>

@@ -29,12 +29,14 @@ using namespace std;
 	SDL_Texture * texture_IE;
 	SDL_Texture * texture_Firefox;
 	SDL_Texture * texture_Opera;
+	SDL_Texture * texture_Safari;
 
 	// enemies
 	SDL_Texture * texture_GreenVirus2;
 	SDL_Texture * texture_GreenVirus;
 	SDL_Texture * texture_Kaspersky;
 	SDL_Texture * texture_Trojan;
+	SDL_Texture * texture_Exclamation;
 
 	// powerups 
 	SDL_Texture * texture_Patch;
@@ -98,6 +100,14 @@ void loadImages() {
 	// load IE
 	img = IMG_Load("Resources/Opera.png");
 	texture_Opera = SDL_CreateTextureFromSurface(renderer, img);
+
+	// load Safari
+	img = IMG_Load("Resources/Safari.png");
+	texture_Safari = SDL_CreateTextureFromSurface(renderer, img);
+
+	// load Exclamation for enemy collision
+	img = IMG_Load("Resources/Exclamation.png");
+	texture_Exclamation = SDL_CreateTextureFromSurface(renderer, img);
 
 	SDL_FreeSurface(img);
 }
@@ -224,6 +234,26 @@ void drawScore(int score) {
 	SDL_FreeSurface(surface);
 }
 
+void drawPlayerSelectMessage() {
+	SDL_Color color = { 255, 255, 255 };
+
+	string msg = "Choose your browser by entering a number followed by enter.";
+
+	SDL_Surface * surface = TTF_RenderText_Solid(font,
+		msg.c_str(), color);
+	SDL_Texture * textTexture = SDL_CreateTextureFromSurface(renderer, surface);
+
+	SDL_Rect destination;
+	destination.x = 0;
+	destination.y = 0;
+	destination.w = 0;
+	destination.h = 0;
+	
+	SDL_RenderCopy(renderer, textTexture, NULL, &destination);
+	SDL_DestroyTexture(textTexture);
+	SDL_FreeSurface(surface);
+}
+
 void drawImg(std::string imgPath, int x, int y, int size) {
 
 	SDL_Rect destination;
@@ -266,12 +296,23 @@ void drawImg(std::string imgPath, int x, int y, int size) {
 	else if (!imgPath.compare("Opera.png")) {
 	SDL_RenderCopy(renderer, texture_Opera, NULL, &destination);
 	}
+	else if (!imgPath.compare("Safari.png")) {
+		SDL_RenderCopy(renderer, texture_Safari, NULL, &destination);
+	}
+	else if (!imgPath.compare("Exclamation.png")) {
+		SDL_RenderCopy(renderer, texture_Exclamation, NULL, &destination);
+	}
 }
 
 void updateScreen() {
 	SDL_RenderPresent(renderer);
 	SDL_RenderClear(renderer);
 	SDL_UpdateWindowSurface(window);
+}
+
+void drawExclamation(int x, int y) {
+	drawImg("Exclamation.png", x, y, 50);
+	SDL_RenderPresent(renderer);
 }
 
 void destroyWindow() {

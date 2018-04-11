@@ -64,13 +64,16 @@
     <Image Include="Patch.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="Safari.png">
-      <Filter>Resource Files</Filter>
-    </Image>
     <Image Include="Trojan.png">
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="Update.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\Safari.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\Exclamation.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
