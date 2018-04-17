@@ -13,8 +13,8 @@ TTF_Font * font;
 TTF_Font * wastedFont;
 
 // store the dimensions of the window
-int width;
-int height;
+int screenWidth;
+int screenHeight;
 
 SDL_Renderer * renderer;
 SDL_Surface * image;
@@ -29,12 +29,14 @@ using namespace std;
 	SDL_Texture * texture_IE;
 	SDL_Texture * texture_Firefox;
 	SDL_Texture * texture_Opera;
+	SDL_Texture * texture_Safari;
 
 	// enemies
 	SDL_Texture * texture_GreenVirus2;
 	SDL_Texture * texture_GreenVirus;
 	SDL_Texture * texture_Kaspersky;
 	SDL_Texture * texture_Trojan;
+	SDL_Texture * texture_Exclamation;
 
 	// powerups 
 	SDL_Texture * texture_Patch;
@@ -99,6 +101,14 @@ void loadImages() {
 	img = IMG_Load("Resources/Opera.png");
 	texture_Opera = SDL_CreateTextureFromSurface(renderer, img);
 
+	// load Safari
+	img = IMG_Load("Resources/Safari.png");
+	texture_Safari = SDL_CreateTextureFromSurface(renderer, img);
+
+	// load Exclamation for enemy collision
+	img = IMG_Load("Resources/Exclamation.png");
+	texture_Exclamation = SDL_CreateTextureFromSurface(renderer, img);
+
 	SDL_FreeSurface(img);
 }
 
@@ -112,6 +122,8 @@ void loadSoundEffects() {
 
 void drawWindow(int width, int height)
 {
+	screenWidth = width;
+	screenHeight = height;
 	bool quit = false;
 
 	SDL_Init(SDL_INIT_EVERYTHING);
@@ -224,6 +236,119 @@ void drawScore(int score) {
 	SDL_FreeSurface(surface);
 }
 
+void drawPlayerSelectMessage() {
+	SDL_Color color = { 255, 255, 255 };
+
+	string msg1 = "Choose your browser by entering a number.";
+
+	SDL_Surface * surface1 = TTF_RenderText_Solid(font,
+		msg1.c_str(), color);
+	SDL_Texture * textTexture1 = SDL_CreateTextureFromSurface(renderer, surface1);
+
+	SDL_Rect destination1;
+	destination1.x = 0;
+	destination1.y = 250;
+	destination1.w = 650;
+	destination1.h = 40;
+
+	string msg2 = "1";
+
+	SDL_Surface * surface2 = TTF_RenderText_Solid(font,
+		msg2.c_str(), color);
+	SDL_Texture * textTexture2 = SDL_CreateTextureFromSurface(renderer, surface2);
+
+	SDL_Rect destination2;
+	destination2.x = (screenWidth / 7) *1;
+	destination2.y = (screenHeight / 2) + 60;
+	destination2.w = 30;
+	destination2.h = 50;
+
+	string msg3 = "2";
+
+	SDL_Surface * surface3 = TTF_RenderText_Solid(font,
+		msg3.c_str(), color);
+	SDL_Texture * textTexture3 = SDL_CreateTextureFromSurface(renderer, surface3);
+
+	SDL_Rect destination3;
+	destination3.x = (screenWidth / 7) * 2;
+	destination3.y = (screenHeight / 2) + 60;
+	destination3.w = 30;
+	destination3.h = 50;
+
+	string msg4 = "3";
+
+	SDL_Surface * surface4 = TTF_RenderText_Solid(font,
+		msg4.c_str(), color);
+	SDL_Texture * textTexture4 = SDL_CreateTextureFromSurface(renderer, surface4);
+
+	SDL_Rect destination4;
+	destination4.x = (screenWidth / 7) * 3;
+	destination4.y = (screenHeight / 2) + 60;
+	destination4.w = 30;
+	destination4.h = 50;
+
+	string msg5 = "4";
+
+	SDL_Surface * surface5 = TTF_RenderText_Solid(font,
+		msg5.c_str(), color);
+	SDL_Texture * textTexture5 = SDL_CreateTextureFromSurface(renderer, surface5);
+
+	SDL_Rect destination5;
+	destination5.x = (screenWidth / 7) * 4;
+	destination5.y = (screenHeight / 2) + 60;
+	destination5.w = 30;
+	destination5.h = 50;
+
+	string msg6 = "5";
+
+	SDL_Surface * surface6 = TTF_RenderText_Solid(font,
+		msg6.c_str(), color);
+	SDL_Texture * textTexture6 = SDL_CreateTextureFromSurface(renderer, surface6);
+
+	SDL_Rect destination6;
+	destination6.x = (screenWidth / 7) * 5;
+	destination6.y = (screenHeight / 2) + 60;
+	destination6.w = 30;
+	destination6.h = 50;
+
+	string msg7 = "6";
+
+	SDL_Surface * surface7 = TTF_RenderText_Solid(font,
+		msg7.c_str(), color);
+	SDL_Texture * textTexture7 = SDL_CreateTextureFromSurface(renderer, surface7);
+
+	SDL_Rect destination7;
+	destination7.x = (screenWidth / 7) * 6;
+	destination7.y = (screenHeight / 2) + 60;
+	destination7.w = 30;
+	destination7.h = 50;
+
+	SDL_RenderCopy(renderer, textTexture1, NULL, &destination1);
+	SDL_RenderCopy(renderer, textTexture2, NULL, &destination2);
+	SDL_RenderCopy(renderer, textTexture3, NULL, &destination3);
+	SDL_RenderCopy(renderer, textTexture4, NULL, &destination4);
+	SDL_RenderCopy(renderer, textTexture5, NULL, &destination5);
+	SDL_RenderCopy(renderer, textTexture6, NULL, &destination6);
+	SDL_RenderCopy(renderer, textTexture7, NULL, &destination7);
+
+	SDL_DestroyTexture(textTexture1);
+	SDL_DestroyTexture(textTexture2);
+	SDL_DestroyTexture(textTexture3);
+	SDL_DestroyTexture(textTexture4);
+	SDL_DestroyTexture(textTexture5);
+	SDL_DestroyTexture(textTexture6);
+	SDL_DestroyTexture(textTexture7);
+
+	SDL_FreeSurface(surface1);
+	SDL_FreeSurface(surface2);
+	SDL_FreeSurface(surface3);
+	SDL_FreeSurface(surface4);
+	SDL_FreeSurface(surface5);
+	SDL_FreeSurface(surface6);
+	SDL_FreeSurface(surface7);
+
+}
+
 void drawImg(std::string imgPath, int x, int y, int size) {
 
 	SDL_Rect destination;
@@ -266,12 +391,23 @@ void drawImg(std::string imgPath, int x, int y, int size) {
 	else if (!imgPath.compare("Opera.png")) {
 	SDL_RenderCopy(renderer, texture_Opera, NULL, &destination);
 	}
+	else if (!imgPath.compare("Safari.png")) {
+		SDL_RenderCopy(renderer, texture_Safari, NULL, &destination);
+	}
+	else if (!imgPath.compare("Exclamation.png")) {
+		SDL_RenderCopy(renderer, texture_Exclamation, NULL, &destination);
+	}
 }
 
 void updateScreen() {
 	SDL_RenderPresent(renderer);
 	SDL_RenderClear(renderer);
 	SDL_UpdateWindowSurface(window);
+}
+
+void drawExclamation(int x, int y) {
+	drawImg("Exclamation.png", x, y, 50);
+	SDL_RenderPresent(renderer);
 }
 
 void destroyWindow() {
