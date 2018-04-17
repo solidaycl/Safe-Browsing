@@ -248,7 +248,7 @@ void drawPlayerSelectMessage() {
 	SDL_Rect destination1;
 	destination1.x = 0;
 	destination1.y = 250;
-	destination1.w = 650;
+	destination1.w = screenWidth;
 	destination1.h = 40;
 
 	string msg2 = "1";
